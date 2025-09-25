@@ -3,9 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Personal Weather Dashboard</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="app"></div>    
+    <div class="container">
+        <h1>Personal Weather Dashboard</h1>
+        
+        <div class="search-container">
+            <input type="text" id="cityInput" placeholder="Enter city name...">
+            <button id="searchBtn">Search</button>
+            <button id="currentLocationBtn">Use My Location</button>
+        </div>
+
+        <div id="errorMessage" class="error"></div>
+
+        <div id="currentWeather" class="weather-card">
+            <h2 id="cityName">City Name</h2>
+            <div class="weather-main">
+                <img id="weatherIcon" src="" alt="Weather Icon">
+                <p id="temperature">--°C</p>
+            </div>
+            <p id="weatherDescription">Description</p>
+            <div class="weather-details">
+                <p>Feels like: <span id="feelsLike">--°C</span></p>
+                <p>Humidity: <span id="humidity">--%</span></p>
+                <p>Wind Speed: <span id="windSpeed">-- km/h</span></p>
+            </div>
+        </div>
+
+        <div id="forecastContainer">
+            <h3>5-Day Forecast</h3>
+            <div id="forecast" class="forecast">
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
