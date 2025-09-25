@@ -69,3 +69,46 @@ async function fetchWeatherByCity(city) {
         showError('Failed to fetch weather data. Please try again later.');
     }
 }
+
+async function fetchWeatherByCoords(lat, lon) {
+    try {
+        
+        const geocodeResponse = await fetch(`${GEOCODE_API_URL}?latitude=${lat}&longitude=${lon}&count=1`);
+        const geocodeData = await geocodeResponse.json();
+        
+        const name = geocodeData.results ? geocodeData.results[0].name : 'Your Location';
+        const country = geocodeData.results ? geocodeData.results[0].country : '';
+        
+        await fetchWeatherData(lat, lon, name, country);
+        
+    } catch (error) {
+        console.error('Error fetching weather data:', error);
+        showError('Failed to fetch weather data. Please try again later.');
+    }
+}
+
+
+async function fetchWeatherData(lat, lon, locationName, countryCode) {
+    try {
+        
+        const response = await fetch(
+            `${WEATHER_API_URL}?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto`
+        );
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.reason || 'Weather data unavailable');
+        }
+
+        
+        hideError();
+        
+        
+        updateCurrentWeather(data, locationName, countryCode);
+        
+        
+        updateForecast(data.daily);
+        
+    } catch (error) {
+        console.error('Error:', error);
+        showError('Failed to load weather data. Please try again.');
