@@ -157,3 +157,63 @@ function updateForecast(dailyData) {
     
     forecastContainer.innerHTML = forecastHTML;
 }
+
+
+function getWeatherDescription(weatherCode) {
+    const weatherMap = {
+        0: 'Clear sky',
+        1: 'Mainly clear', 
+        2: 'Partly cloudy',
+        3: 'Overcast',
+        45: 'Fog',
+        48: 'Depositing rime fog',
+        51: 'Light drizzle',
+        53: 'Moderate drizzle',
+        55: 'Dense drizzle',
+        61: 'Slight rain',
+        63: 'Moderate rain',
+        65: 'Heavy rain',
+        80: 'Slight rain showers',
+        81: 'Moderate rain showers',
+        82: 'Violent rain showers',
+        95: 'Thunderstorm',
+        96: 'Thunderstorm with slight hail',
+        99: 'Thunderstorm with heavy hail'
+    };
+    return weatherMap[weatherCode] || 'Unknown';
+}
+
+
+function getWeatherIconUrl(weatherCode) {
+    const iconMap = {
+        0: 'https://cdn2.iconfinder.com/data/icons/weather-emoticon/64/07_sun_smile_happy_emoticon_weather_smiley-64.png',
+        1: 'https://cdn3.iconfinder.com/data/icons/picons-weather/57/37_mainly_clear_night-64.png',
+        2: 'https://cdn2.iconfinder.com/data/icons/swanky-outlines/256/0013_Partly-Cloudy.png', 
+        3: 'https://cdn2.iconfinder.com/data/icons/weather-119/512/weather-2-64.png',
+        45: 'https://cdn4.iconfinder.com/data/icons/the-weather-is-nice-today/64/weather_49-64.png',
+        48: 'https://cdn3.iconfinder.com/data/icons/weather-610/64/weather_cloud_fog-64.png',
+        95: 'https://cdn3.iconfinder.com/data/icons/tiny-weather-1/512/flash-cloud-64.png',
+        80: 'https://cdn4.iconfinder.com/data/icons/weather-940/24/Day_Rain-64.png',
+        81: 'https://cdn2.iconfinder.com/data/icons/weather-1070/64/weather_moderate_rainfall-64.png',
+        82: 'https://cdn4.iconfinder.com/data/icons/the-weather-is-nice-today/64/weather_24-64.png',
+        51: 'https://cdn2.iconfinder.com/data/icons/rainy-weather/256/Day_Drizzle-64.png',
+        53: 'https://cdn2.iconfinder.com/data/icons/rainy-weather/256/Day_Drizzle-64.png',
+        55: 'https://cdn2.iconfinder.com/data/icons/rainy-weather/256/Day_Drizzle-64.png',
+        61: 'https://cdn2.iconfinder.com/data/icons/rainy-weather/256/Day_Rain-64.png',
+        63: 'https://cdn2.iconfinder.com/data/icons/rainy-weather/256/Day_Rain-64.png',
+        65: 'https://cdn2.iconfinder.com/data/icons/rainy-weather/256/Day_Rain-64.png',
+        96: 'https://cdn0.iconfinder.com/data/icons/large-weather-icons/64/Hail.png',
+        99: 'https://cdn2.iconfinder.com/data/icons/10-plagues-of-egypt/489/ten-plagues-egypt-005-64.png'      
+    
+    };
+    return iconMap[weatherCode] || 'https://open-meteo.com/images/weather-icon/not-available.svg';
+}
+
+function showError(message) {
+    errorMessage.textContent = message;
+    errorMessage.style.display = 'block';
+}
+
+function hideError() {
+    errorMessage.style.display = 'none';
+}
