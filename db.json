@@ -1,3 +1,19 @@
 {
-  "favoriteCities": []
+  "favoriteCities": [
+    {
+      "id": "a67e",
+      "name": "Nairobi",
+      "timestamp": "2025-09-26T06:58:36.557Z"
+    },
+    {
+      "id": "b51c",
+      "name": "Rongai",
+      "timestamp": "2025-09-26T06:58:50.049Z"
+    },
+    {
+      "id": "0eff",
+      "name": "Eldoret",
+      "timestamp": "2025-09-26T07:15:40.540Z"
+    }
+  ]
 }
