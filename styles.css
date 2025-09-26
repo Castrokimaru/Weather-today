@@ -147,6 +147,24 @@ button:hover {
     font-size: 1.2em;
     font-weight: bold;
 }
+#addToFavoritesBtn, #showFavoritesBtn {
+    background-color: rgba(255, 159, 67, 0.9);
+    width: 300px;
+}   
+#loadFavoritesBtn , #clearFavoritesBtn {
+    background-color: rgb(7, 185, 239)
+}
+#favoritesList {
+    list-style-type: circle;
+    padding: 0;
+    margin-top: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+    font-size: medium;
+    display : flex;
+    flex-direction: column;
+    gap: 25px;
+}
 
 @media (max-width: 768px) {
     .weather-main {
