@@ -112,3 +112,48 @@ async function fetchWeatherData(lat, lon, locationName, countryCode) {
     } catch (error) {
         console.error('Error:', error);
         showError('Failed to load weather data. Please try again.');
+    }
+}
+
+function updateCurrentWeather(data, name, country) {
+    const current = data.current;
+    
+    cityName.textContent = `${name}${country ? `, ${country}` : ''}`;
+    temperature.textContent = `${Math.round(current.temperature_2m)}°C`;
+    weatherDescription.textContent = getWeatherDescription(current.weather_code);
+    feelsLike.textContent = `${Math.round(current.apparent_temperature)}°C`;
+    humidity.textContent = `${current.relative_humidity_2m}%`;
+    windSpeed.textContent = `${current.wind_speed_10m} km/h`;
+    
+    
+    weatherIcon.src = getWeatherIconUrl(current.weather_code);
+    weatherIcon.alt = weatherDescription.textContent;
+}
+
+
+function updateForecast(dailyData) {
+
+    forecastContainer.innerHTML = '';
+    
+    
+    const forecastHTML = dailyData.time.map((date, index) => {
+        if (index >= 5) return '';
+        
+        const maxTemp = Math.round(dailyData.temperature_2m_max[index]);
+        const minTemp = Math.round(dailyData.temperature_2m_min[index]);
+        const weatherCode = dailyData.weather_code[index];
+        
+        const dayName = new Date(date).toLocaleDateString('en', { weekday: 'short' });
+        
+        return `
+            <div class="forecast-card">
+                <div class="forecast-day">${dayName}</div>
+                <img src="${getWeatherIconUrl(weatherCode)}" alt="${getWeatherDescription(weatherCode)}" width="40">
+                <div class="forecast-temp">${maxTemp}°C</div>
+                <div>${minTemp}°C</div>
+            </div>
+        `;
+    }).join('');
+    
+    forecastContainer.innerHTML = forecastHTML;
+}
