@@ -206,7 +206,7 @@ function getWeatherIconUrl(weatherCode) {
         99: 'https://cdn2.iconfinder.com/data/icons/10-plagues-of-egypt/489/ten-plagues-egypt-005-64.png'      
     
     };
-    return iconMap[weatherCode] || 'https://open-meteo.com/images/weather-icon/not-available.svg';
+    return iconMap[weatherCode] || 'https://cdn2.iconfinder.com/data/icons/weather-119/512/weather-2-64.png';
 }
 
 function showError(message) {
