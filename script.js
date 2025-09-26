@@ -217,3 +217,87 @@ function showError(message) {
 function hideError() {
     errorMessage.style.display = 'none';
 }
+
+
+const baseUrl = 'http://localhost:8000/favoriteCities';
+
+
+async function fetchFavorites() {
+    try {
+        const response = await fetch(baseUrl);
+        if (!response.ok) throw new Error('Failed to fetch favorites');
+        const favorites = await response.json();
+        displayFavorites(favorites); 
+    } catch (error) {
+        console.error('Error fetching favorites:', error);
+    }
+}
+
+async function addToFavorites(cityData) {
+
+    const existingFavorites = await fetch(baseUrl).then(res => res.json());
+    const isDuplicate = existingFavorites.some(fav => fav.name === cityData.name);
+
+    if (isDuplicate) {
+        alert('This city is already in your favorites!');
+        return;
+    }
+
+    try {
+        const response = await fetch(baseUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(cityData) 
+        });
+        if (!response.ok) throw new Error('Failed to add favorite');
+        const newFavorite = await response.json();
+        fetchFavorites();
+    } catch (error) {
+        console.error('Error adding favorite:', error);
+    }
+}
+
+async function deleteFavorite(id) {
+    try {
+        const response = await fetch(`${baseUrl}/${id}`, {
+            method: 'DELETE'
+        });
+        if (!response.ok) throw new Error('Failed to delete favorite');
+        fetchFavorites(); 
+    } catch (error) {
+        console.error('Error deleting favorite:', error);
+    }
+}
+
+function displayFavorites(favorites) {
+    const favoritesList = document.getElementById('favoritesList');
+    favoritesList.innerHTML = ''; 
+
+    favorites.forEach(city => {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `
+            <span>${city.name}</span>
+            <button onclick="loadFavorite('${city.name}')">  load</button>
+            <button onclick="deleteFavorite(${city.id})">    Delete</button>
+        `;
+        favoritesList.appendChild(listItem);
+    });
+}
+
+
+function loadFavorite(cityName) {
+    fetchWeatherByCity(cityName); 
+}
+
+document.getElementById('addToFavoritesBtn').addEventListener('click', () => {
+    const cityData = {
+        name: document.getElementById('cityName').textContent.split(',')[0], 
+    
+        timestamp: new Date().toISOString()
+    };
+    addToFavorites(cityData);
+});
+
+document.addEventListener('DOMContentLoaded', fetchFavorites);
